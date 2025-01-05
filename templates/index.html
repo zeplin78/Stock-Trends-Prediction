@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Trend Prediction</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center my-4">Stock Trend Prediction</h1>
+
+    <!-- Form to input stock ticker -->
+    <form method="post">
+        <div class="form-group">
+            <label for="ticker">Enter Stock Ticker:</label>
+            <input type="text" class="form-control" id="ticker" name="ticker" placeholder="e.g., AAPL, GOOG, TSLA" required>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Get Prediction</button>
+        </div>
+    </form>
+
+    <hr>
+
+    <!-- Display error if any -->
+    {% if error %}
+    <div class="alert alert-danger text-center" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <!-- Graphs -->
+    <div class="graph-container">
+        {% if plot_url %}
+        <h3 class="my-3">Stock Trend Prediction Graph</h3>
+        <img src="data:image/png;base64,{{ plot_url }}" alt="Stock Price Prediction" class="img-fluid">
+        {% endif %}
+    </div>
+
+    <div class="graph-container">
+        {% if plot_url2 %}
+        <h3 class="my-3">Original vs Predicted Prices</h3>
+        <img src="data:image/png;base64,{{ plot_url2 }}" alt="Original vs Predicted Prices" class="img-fluid">
+        {% endif %}
+    </div>
+
+    <div class="graph-container">
+        {% if plot_url3 %}
+        <h3 class="my-3">Closing Price vs Time</h3>
+        <img src="data:image/png;base64,{{ plot_url3 }}" alt="Closing Price vs Time" class="img-fluid">
+        {% endif %}
+    </div>
+
+    <!-- Display stock data table -->
+    {% if stock_table %}
+    <div class="table-container">
+        <h3 class="my-3 text-center">Stock Data Summary</h3>
+        <div>{{ stock_table|safe }}</div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Include Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
